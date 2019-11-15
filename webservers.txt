@@ -1,0 +1,47 @@
+1. << pertama konfigurasi ip address (nano /etc/network/interfaces)
+auto ech0
+static
+	address 192.168.63.1
+	netmask 255.255.255.0
+2. install bind 9 default 
+3. copy file dan pindah directory 
+	cd /etc/bind
+	cp db.local db.sumendra
+	cp db.local db.english
+	cp db.127 db.100
+
+4. nano named.conf.default-zones
+
+zone "sumendra.com"{
+	type master;
+	file"/etc/bind/db.sumendra";
+};
+
+zone "english.com"{
+	type master;
+	file"/etc/bind/db.english";
+};
+zone "192.in-addr.arpa"{
+	type master;
+	file "/etc/bind/db.100";
+};
+
+5. nano db.sumendra
+@	IN	NS	sumendra.com
+@	IN	A	192.168.63.1
+www	IN	A	192.168.63.1
+FTS	IN	A	192.168.63.1
+
+6. nano db.100
+@	IN	NS	sumendra.com.
+@	IN	NS	english.com.
+1	IN	PTR	www.sumendra.com
+1	IN	PTR	www.english.com
+1	IN	PTR	ftp.sumendra.com
+1	IN	PTR	ftp.english.com
+7. nano /etc/resolv.conf
+nameserver 192.168.63.1
+8. jalankan bind 9
+service bind9 retart
+9 nslookup www.sumendra.com
+10 nslookup www.english.com

@@ -1,0 +1,11 @@
+1. << masuk ke nano/var/www/index.html
+lalu ketikkan 
+<html>
+	<body>
+		<h1>Biodata Diri</h1>
+		<p>Nama : I Kadek Sumendra</p>
+		<p>Nim	: 6706174063 </p>
+		<p>Kelas: D3IF 41 01</p>
+	</body>
+</html>
+2. /etc/init.d/apache2 restart 

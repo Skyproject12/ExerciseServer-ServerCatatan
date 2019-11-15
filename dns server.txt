@@ -1,0 +1,82 @@
+web server 
+
+untuk menginstall sesuatu pastikan select terlebih dahulu iso 1
+apt-cdrom add
+apt-get update
+apt-cdrom 
+1. >>ifup eth1 --> menambah ethernet di debian 
+2. >>ifconfig --> mengecek ethernet yang aktif 
+3. >>nano /etc/network/interfaces --> menmpilkan editting untuk
+ethernet 
+auto lo 
+iface lo inet loopback
+allow-hotplug eth0
+auto eth0
+iface eth0 inet static
+	address 192.168.10.63
+	netmask 255.255.255.0
+	network 192.168.10.0
+	broadcash 192.168.10.255
+	gateway 192.168.10.1
+dns-nameservers 192.168.10.1
+
+4. >>setelah editting restart connection dengan
+/etc/init.d/networking restart
+
+5. >>lalu copy seluruh file dengan pindah directory terlebih dulu 
+dengan perintah 
+cd /etc/bind
+cp named.conf.defauld-zones named.conf.defauld-zones.old1
+cp db.local db.sumendra
+cp db.127 db.100
+
+6. >>lalu configurasi pada bagian nano named.conf.local
+zone"sumendra.com"{
+	type master;
+	file"/etc/bind/db.sumendra.com";
+};
+zone"10.168.192, in-addr.apra"{
+	type master;
+	file"/etc/bind/db.100";
+}
+
+7. >> configurasi db.sumendra.com (nano db.sumendra.com)
+$TTL		604800
+@	IN	SOA	sumendra.com.     root.sumendra.com. (
+                  	        2         	; Serial
+                   	  	604800       	; Refresh
+                   	    	86400        	; Retry
+                     		2419200       	; Expire
+                   		604800 )     	; Negative Cache TTL
+;
+@  		IN		NS		sekolah.sch.id.
+@   		IN		A		192.168.10.63
+www		IN		A       	192.168.10.63
+ntp		IN		A       	192.168.10.63
+mail		IN		A       	192.168.10.63
+ftp	  	IN		A       	192.168.10.63
+
+8. >>configurasi db.100 (nano db.100)
+$TTL		604800
+@	IN	SOA	sumendra.com.     root.sumendra.com. (
+                  	        2         	; Serial
+                   	  	604800       	; Refresh
+                   	    	86400        	; Retry
+                     		2419200       	; Expire
+                   		604800 )     	; Negative Cache TTL
+;
+@	IN	NS	sumendra.com.
+63	IN	PTR	sumendra.com.
+
+9. >>configurasi  resolv.conf (nano /etc/resolv.conf)
+search sumendra.com
+nameserver 192.168.10.63
+
+10. >> restart bind9 
+/etc/init.d/bind9 restart
+
+11. >> restart network 
+/etc/init.d/networking restart
+
+12. >> cek server
+nslookup www.sumendra.com

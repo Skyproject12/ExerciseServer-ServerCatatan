@@ -1,0 +1,17 @@
+pertama install apache 2 php 5 
+cd /ect/apache2/
+cd sites-default
+cp default sumendra
+nano sumendra
+ServerAdmin sumendrakadek108@gmail.com
+Servernama www.sumendra.com
+serveralias sumendra.com
+sumendra (directory baru) saja 
+a2dissite default
+a2ensite sumendra
+cd /var/www/
+mkdir sumendra
+nano index.html
+service apache2 restart 
+
+

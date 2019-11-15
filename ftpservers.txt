@@ -1,0 +1,16 @@
+pertama install proftpd
+adduser suml
+pass suml
+cd /home/sumendra/
+mkdir berbagi
+cd berbagi
+userdel ftp 
+useradd -d /share/ ftp
+passwd ftp 
+buat pass 
+chmod 777 /home/sumendra/berbagi
+nano /etc/proftpd/proftpd.conf
+<Anonymous /home/sumendra/berbagi>
+user ftp
+</Anonymous>
+service proftpd restart 

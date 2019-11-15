@@ -1,0 +1,29 @@
+apt-get install squid
+nano /etc/squid/squid.conf
+ubah di bagian http_port 3128 transparent
+cache_mem 16 MB
+cache_mgr admin@sumendra.com
+visible_hostname proxy.sumendra.com
+
+tambahkan 
+acl url dstdomain "/etc/squid/url"
+acl key url_regex -i "/etc/squid/key"
+http_access deny url
+http_access deny key 
+acl lan src 192.168.63.0/24
+http_access allow lan
+http_access allow all
+
+beri tanda komentar pada http_access deny all
+
+nano /etc/squid/key 
+google 
+youtube
+
+nano /etc/squid/url
+www.google.com
+
+service squid restart
+
+
+
